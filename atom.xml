@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://rayree.github.io</id>
     <title>Rayree</title>
-    <updated>2021-04-05T10:59:01.531Z</updated>
+    <updated>2021-04-05T11:04:10.542Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://rayree.github.io"/>
     <link rel="self" href="https://rayree.github.io/atom.xml"/>
@@ -16,12 +16,12 @@
         <link href="https://rayree.github.io/post/wsl2-ubuntu-2004-wu-fa-shi-yong-snap-an-zhuang-cheng-xu-jie-jue-fang-fa/">
         </link>
         <updated>2021-04-05T09:53:14.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="事情背景">事情背景</h1>
+        <content type="html"><![CDATA[<h1 id="事情背景">📖事情背景</h1>
 <p>最近在使用<code>WSL2 ubuntu 20.04</code>过程中发现使用<code>apt</code>包管理工具安装的<code>CMake</code>存在内部bug，导致无法编译工程代码。于是想到可以使用<code>ubuntu</code>系统预装的另一个包管理工具<code>snap</code>安装最新的<code>CMake</code>。</p>
-<h1 id="遇到问题">遇到问题</h1>
+<h1 id="遇到问题">❓遇到问题</h1>
 <p>当使用 <code>sudo apt remove cmake</code> 命令卸载系统<code>cmake</code>后，使用<code>sudo snap install cmake --classic</code>命令安装最新版<code>cmake</code>时出现如下的错误：<br>
 <img src="https://rayree.github.io/post-images/1617617366572.png" alt="" loading="lazy"></p>
-<h1 id="解决问题">解决问题</h1>
+<h1 id="解决问题">📝解决问题</h1>
 <p>于是网上搜索相关错误原因，最终从<a href="https://discourse.ubuntu.com/t/using-snapd-in-wsl2/12113">using-snapd-in-wsl2</a>中得知snap依赖于<code>Systemd</code>初始化机制，但由于<code>WSL2</code>的<code>Linux</code>镜像是由自定义<code>init</code>程序启动，以做到最小的初始化过程，所以默认的<code>WSL2 Linux</code>系统无法使用<code>Systemd</code>机制，以至于<code>snap</code>无法使用。<br>
 所以如果想使用<code>snap</code>安装<code>CMake</code>必须准备<code>Systemd</code>初始化机制，步骤如下：</p>
 <pre><code class="language-shell"># 安装必要软件
@@ -33,7 +33,7 @@ sudo daemonize /usr/bin/unshare --fork --pid --mount-proc /lib/systemd/systemd -
 # 使用nsenter进入systemd的容器空间
 exec sudo nsenter -t $(pidof systemd) -a su - $LOGNAME
 </code></pre>
-<h1 id="使用snap安装程序">使用snap安装程序(😄)</h1>
+<h1 id="使用snap安装cmake">✨使用snap安装cmake</h1>
 <pre><code class="language-shell"># 使用snap安装cmake
 sudo snap install cmake --classic
 </code></pre>
